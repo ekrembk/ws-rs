@@ -127,7 +127,7 @@ where
             "Attempted to listen for connections from two addresses on the same websocket."
         );
 
-        let tcp = TcpListener::bind(addr)?;
+        let tcp = TcpListener::from_std(std::net::TcpListener::bind(addr)?)?;
         // TODO: consider net2 in order to set reuse_addr
         poll.register(&tcp, ALL, Ready::readable(), PollOpt::level())?;
         self.listener = Some(tcp);
